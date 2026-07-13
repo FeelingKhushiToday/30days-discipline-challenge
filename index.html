@@ -298,6 +298,340 @@
 
 
 
+
+  /* Supportive companion encouragement */
+  .encouragement-card{
+    display:none;
+    align-items:center;
+    gap:12px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:12px 14px;
+    margin-bottom:18px;
+  }
+  .encouragement-card.show{ display:flex; }
+  .encouragement-avatar{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+  }
+  .encouragement-avatar svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+  .encouragement-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:15px;
+    margin-bottom:2px;
+  }
+  .encouragement-text{
+    font-size:12px;
+    line-height:1.45;
+    color:var(--dark-soft);
+  }
+
+  /* Final report overlay */
+  .report-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(31,42,28,.68);
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    z-index:1500;
+    overflow:auto;
+    padding:28px 16px;
+  }
+  .report-overlay.show{ display:flex; }
+
+  .report-shell{
+    width:100%;
+    max-width:760px;
+    background:#F7F9F4;
+    color:var(--dark);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 24px 70px rgba(0,0,0,.34);
+  }
+  .report-toolbar{
+    position:sticky;
+    top:0;
+    z-index:4;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    padding:12px;
+    background:rgba(247,249,244,.96);
+    border-bottom:1px solid #C6D2BE;
+    backdrop-filter:blur(8px);
+  }
+  .report-toolbar button{
+    border-radius:8px;
+    padding:9px 13px;
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .report-print{
+    background:var(--dark);
+    color:var(--white);
+    border:none;
+  }
+  .report-close{
+    background:transparent;
+    color:var(--dark-soft);
+    border:1px solid var(--line);
+  }
+
+  .report-page{
+    padding:44px 46px;
+  }
+  .report-cover{
+    min-height:690px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(circle at 20% 18%, rgba(198,210,190,.75), transparent 28%),
+      radial-gradient(circle at 82% 80%, rgba(179,194,169,.65), transparent 30%),
+      #F7F9F4;
+  }
+  .report-brand{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:3px;
+    color:var(--dark-soft);
+    margin-bottom:18px;
+  }
+  .report-main-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:42px;
+    line-height:1.08;
+    margin-bottom:12px;
+  }
+  .report-cover-sub{
+    font-size:15px;
+    color:var(--dark-soft);
+    margin-bottom:28px;
+  }
+  .report-cover-avatar{
+    width:150px;
+    height:150px;
+    margin:0 auto 18px;
+  }
+  .report-cover-avatar svg{ width:100%; height:100%; }
+  .report-quote{
+    max-width:480px;
+    margin:24px auto 0;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:20px;
+    line-height:1.45;
+  }
+  .report-date{
+    margin-top:22px;
+    font-size:12px;
+    color:var(--dark-soft);
+  }
+
+  .report-section{
+    border-top:1px solid #C6D2BE;
+  }
+  .report-section-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:28px;
+    margin:0 0 18px;
+  }
+  .report-section-intro{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--dark-soft);
+    margin-bottom:22px;
+  }
+
+  .report-stats-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:12px;
+  }
+  .report-stat{
+    background:#DCE4D6;
+    border:1px solid #B3C2A9;
+    border-radius:14px;
+    padding:17px;
+  }
+  .report-stat-value{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:27px;
+  }
+  .report-stat-label{
+    margin-top:3px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--dark-soft);
+  }
+
+  .report-habit{
+    margin-bottom:14px;
+  }
+  .report-habit-top{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:600;
+  }
+  .report-habit-track{
+    height:10px;
+    background:#DCE4D6;
+    border:1px solid #B3C2A9;
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .report-habit-fill{
+    height:100%;
+    background:#1F2A1C;
+    border-radius:8px;
+  }
+
+  .report-growth-box{
+    background:#DCE4D6;
+    border:1px solid #B3C2A9;
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+  }
+  .report-growth-avatar{
+    width:120px;
+    height:120px;
+    margin:0 auto 10px;
+  }
+  .report-growth-avatar svg{ width:100%; height:100%; }
+  .report-leaves{
+    font-size:28px;
+    letter-spacing:6px;
+    margin:10px 0;
+  }
+  .report-world-name{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:21px;
+  }
+  .report-world-copy{
+    font-size:13px;
+    color:var(--dark-soft);
+    line-height:1.5;
+    margin-top:5px;
+  }
+
+  .report-reflection{
+    background:#F1F4ED;
+    border-left:4px solid #8FA083;
+    border-radius:0 12px 12px 0;
+    padding:16px 18px;
+    margin-bottom:15px;
+  }
+  .report-reflection-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:18px;
+    margin-bottom:7px;
+  }
+  .report-reflection-text{
+    white-space:pre-wrap;
+    font-size:13px;
+    line-height:1.6;
+    color:var(--dark-soft);
+  }
+
+  .report-insight{
+    background:#1F2A1C;
+    color:#F7F9F4;
+    border-radius:16px;
+    padding:22px;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:19px;
+    line-height:1.5;
+  }
+
+  .report-letter{
+    background:#EEF2E9;
+    border:1px solid #C6D2BE;
+    border-radius:16px;
+    padding:28px;
+    font-family:'Playfair Display', serif;
+    font-size:17px;
+    line-height:1.65;
+  }
+  .report-letter-signature{
+    margin-top:18px;
+    font-style:italic;
+    font-weight:700;
+  }
+
+  .report-footer{
+    text-align:center;
+    padding:22px;
+    font-size:11px;
+    color:var(--dark-soft);
+    border-top:1px solid #C6D2BE;
+  }
+
+  @media (max-width:600px){
+    .report-page{ padding:34px 22px; }
+    .report-main-title{ font-size:34px; }
+    .report-stats-grid{ grid-template-columns:1fr 1fr; }
+  }
+
+  @media print{
+    body *{ visibility:hidden !important; }
+    #reportOverlay,
+    #reportOverlay *{ visibility:visible !important; }
+    #reportOverlay{
+      position:absolute;
+      inset:0;
+      display:block !important;
+      overflow:visible;
+      padding:0;
+      background:white;
+    }
+    .report-shell{
+      max-width:none;
+      width:100%;
+      border-radius:0;
+      box-shadow:none;
+    }
+    .report-toolbar{ display:none !important; }
+    .report-page{
+      break-inside:avoid;
+      page-break-inside:avoid;
+    }
+    .report-cover{
+      min-height:100vh;
+      page-break-after:always;
+    }
+    .report-section{
+      page-break-before:always;
+    }
+  }
+
   /* Companion growth world */
   .growth-card{
     position:relative;
@@ -953,6 +1287,15 @@
   </div>
 
 
+
+  <div class="encouragement-card" id="encouragementCard">
+    <div class="encouragement-avatar" id="encouragementAvatar"></div>
+    <div>
+      <div class="encouragement-title" id="encouragementTitle"></div>
+      <div class="encouragement-text" id="encouragementText"></div>
+    </div>
+  </div>
+
   <div class="growth-card" id="growthCard" style="display:none;">
     <div class="growth-top">
       <div>
@@ -1019,6 +1362,17 @@
 
 
 
+
+<div class="report-overlay" id="reportOverlay">
+  <div class="report-shell">
+    <div class="report-toolbar">
+      <button class="report-print" id="reportPrintBtn">Print / Save as PDF</button>
+      <button class="report-close" id="reportCloseBtn">Close</button>
+    </div>
+    <div id="reportContent"></div>
+  </div>
+</div>
+
 <div class="leaf-reward-overlay" id="leafRewardOverlay">
   <div class="leaf-reward-card">
     <div class="leaf-reward-icon"></div>
@@ -1059,7 +1413,7 @@
       <button class="email-send" id="celebrateSendBtn">Send</button>
     </div>
     <div class="email-desc" style="margin-bottom:12px;">Get your complete 30-day report, including all weekly reflections.</div>
-    <button class="email-send" id="downloadReportBtn" style="width:100%; padding:11px 16px; margin-bottom:4px;">Download Final Report</button>
+    <button class="email-send" id="downloadReportBtn" style="width:100%; padding:11px 16px; margin-bottom:4px;">View Final Report</button>
     <button class="celebrate-close" id="celebrateCloseBtn">Close</button>
   </div>
 </div>
@@ -1135,6 +1489,7 @@ function toggleCheck(day, catKey){
     checkForWeeklyJournal(day);
   }
   refreshJournalButtons();
+  renderEncouragement();
 }
 
 function dayComplete(day){
@@ -1266,6 +1621,74 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   }
 });
 
+
+
+
+/* ---------- Supportive companion encouragement ---------- */
+const ENCOURAGEMENT_MESSAGES = {
+  none: [
+    "A fresh row is waiting. One small check-in is enough to begin.",
+    "You do not have to do everything at once. Choose one small win.",
+    "Some days begin slowly. Your companion is still right here."
+  ],
+  started: [
+    "You have already started. Keep building from the progress you made.",
+    "A few steps still count. Finish what feels possible today.",
+    "Momentum is here—even one more check-in can strengthen it."
+  ],
+  nearly: [
+    "You are so close. One final check-in will complete this day.",
+    "Almost there. Finish gently, not perfectly.",
+    "Your companion can see how much effort you already gave today."
+  ],
+  complete: [
+    "You completed the whole row. Let yourself feel proud of that.",
+    "Today is complete. Your consistency helped your shared world grow.",
+    "You kept your promise to yourself today."
+  ]
+};
+
+function latestRelevantDay(){
+  let latestStarted = 0;
+  for(let day = 1; day <= 30; day++){
+    if(dayStarted(day)) latestStarted = day;
+  }
+  if(latestStarted) return latestStarted;
+
+  for(let day = 1; day <= 30; day++){
+    if(!dayComplete(day)) return day;
+  }
+  return 30;
+}
+
+function renderEncouragement(){
+  const card = document.getElementById('encouragementCard');
+  if(!card || !companion){
+    if(card) card.classList.remove('show');
+    return;
+  }
+
+  const day = latestRelevantDay();
+  const d = state[day] || emptyDay();
+  const completed = CATEGORIES.filter(c => d[c.key]).length;
+
+  let mood = 'none';
+  if(completed === CATEGORIES.length) mood = 'complete';
+  else if(completed >= CATEGORIES.length - 1) mood = 'nearly';
+  else if(completed > 0) mood = 'started';
+
+  const choices = ENCOURAGEMENT_MESSAGES[mood];
+  const message = choices[(day + completed) % choices.length];
+
+  document.getElementById('encouragementAvatar').innerHTML =
+    animalSVG(companion.key, companion.fur, companion.patch);
+  document.getElementById('encouragementTitle').textContent =
+    mood === 'complete'
+      ? `Day ${day} is complete`
+      : `${companion.name.split(' ')[0]} is cheering you on`;
+  document.getElementById('encouragementText').textContent = message;
+  card.classList.add('show');
+}
 
 
 /* ---------- Companion growth rewards ---------- */
@@ -1586,6 +2009,235 @@ document.addEventListener('keydown', event => {
 
 
 
+
+/* ---------- Designed final report ---------- */
+function getDetailedReportStats(){
+  const byCategory = {};
+  CATEGORIES.forEach(category => byCategory[category.key] = 0);
+
+  let totalChecked = 0;
+  let fullDays = 0;
+  let startedDays = 0;
+  let currentStreak = 0;
+  let longestStreak = 0;
+  let recoveryDays = 0;
+  let previousWasIncomplete = false;
+
+  for(let day = 1; day <= 30; day++){
+    const d = state[day] || emptyDay();
+    const checked = CATEGORIES.filter(category => {
+      const done = !!d[category.key];
+      if(done) byCategory[category.key]++;
+      return done;
+    }).length;
+
+    totalChecked += checked;
+    if(checked > 0) startedDays++;
+
+    const complete = checked === CATEGORIES.length;
+    if(complete){
+      fullDays++;
+      currentStreak++;
+      longestStreak = Math.max(longestStreak, currentStreak);
+      if(previousWasIncomplete) recoveryDays++;
+    }else{
+      currentStreak = 0;
+    }
+
+    if(checked > 0) previousWasIncomplete = !complete;
+  }
+
+  return {
+    totalChecked,
+    fullDays,
+    startedDays,
+    longestStreak,
+    recoveryDays,
+    completionPercent: Math.round((totalChecked / 150) * 100),
+    byCategory
+  };
+}
+
+function categoryLabel(key){
+  const labels = {
+    move:'Movement',
+    hydrate:'Hydration',
+    sleep:'Sleep',
+    nourish:'Nourishment',
+    mind:'Mind'
+  };
+  return labels[key] || key;
+}
+
+function strongestAndGrowthHabit(stats){
+  const entries = Object.entries(stats.byCategory);
+  const sorted = [...entries].sort((a,b) => b[1] - a[1]);
+  return {
+    strongest: sorted[0],
+    growth: sorted[sorted.length - 1]
+  };
+}
+
+function companionLetter(firstName){
+  const letters = {
+    fox: `Thirty days ago, you chose me. Every time you returned, our forest became a little fuller. The leaves we earned are reminders of the promises you kept to yourself. Thank you for growing beside me.`,
+    panda: `Thirty days ago, our bamboo grove was quiet. You brought patience, repetition, and care to it. Every leaf now carries proof that slow progress is still real progress. Thank you for growing with me.`,
+    bunny: `We began with one small patch of green. Every check-in brought new life to our meadow. You showed that courage can look like returning, even after a difficult day. Thank you for running this journey beside me.`,
+    swan: `Our lakeside garden grew quietly, one reflection at a time. You learned that grace is not the absence of effort—it is effort practiced with patience. Thank you for sharing this peaceful journey with me.`,
+    lion: `You began with courage, and you finished with strength. Every acacia leaf in our savanna represents a moment when you chose to keep going. Thank you for growing into your discipline beside me.`,
+    otter: `The river kept moving, and so did you. You found ways forward, returned after hard moments, and helped our riverbank flourish. Thank you for building this world with me.`
+  };
+  return letters[companion?.key] || `You kept returning, reflecting, and growing. Thank you for completing this journey with me.`;
+}
+
+function buildDesignedReport(){
+  const stats = getDetailedReportStats();
+  const entries = getJournalEntries();
+  const habitSummary = strongestAndGrowthHabit(stats);
+  const firstName = companion ? companion.name.split(' ')[0] : 'Companion';
+  const world = companion && COMPANION_WORLDS[companion.key]
+    ? COMPANION_WORLDS[companion.key]
+    : { label:'Your growing world' };
+  const completedDate = new Date().toLocaleDateString(undefined, {
+    year:'numeric',
+    month:'long',
+    day:'numeric'
+  });
+
+  const habitBars = CATEGORIES.map(category => {
+    const count = stats.byCategory[category.key];
+    const percent = Math.round((count / 30) * 100);
+    return `
+      <div class="report-habit">
+        <div class="report-habit-top">
+          <span>${categoryLabel(category.key)}</span>
+          <span>${count}/30 · ${percent}%</span>
+        </div>
+        <div class="report-habit-track">
+          <div class="report-habit-fill" style="width:${percent}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const reflections = WEEKS.map(week => `
+    <div class="report-reflection">
+      <div class="report-reflection-title">Week ${week.num} — ${week.name}</div>
+      <div class="report-reflection-text">${
+        (entries[week.num] || 'No reflection was entered for this week.')
+          .replace(/&/g,'&amp;')
+          .replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;')
+      }</div>
+    </div>
+  `).join('');
+
+  const strongestLabel = categoryLabel(habitSummary.strongest[0]);
+  const growthLabel = categoryLabel(habitSummary.growth[0]);
+  const insight = `Your strongest area was ${strongestLabel}, with ${habitSummary.strongest[1]} of 30 check-ins. ${growthLabel} offered the most room for continued growth. You completed ${stats.fullDays} full days and returned after an incomplete day ${stats.recoveryDays} time${stats.recoveryDays === 1 ? '' : 's'}—evidence that discipline can include beginning again.`;
+
+  document.getElementById('reportContent').innerHTML = `
+    <section class="report-page report-cover">
+      <div class="report-brand">FEELINGKHUSHITODAY</div>
+      <div class="report-main-title">Your Discipline Story</div>
+      <div class="report-cover-sub">The 30-Day Discipline Challenge</div>
+      <div class="report-cover-avatar">${
+        companion ? animalSVG(companion.key, companion.fur, companion.patch) : ''
+      }</div>
+      <div><b>Completed with ${companion ? companion.name : 'your companion'}</b></div>
+      <div class="report-quote">“The goal was not perfection. It was becoming someone who returns.”</div>
+      <div class="report-date">Completed ${completedDate}</div>
+    </section>
+
+    <section class="report-page report-section">
+      <h2 class="report-section-title">Your journey</h2>
+      <div class="report-section-intro">Thirty days of showing up, adjusting, and returning.</div>
+      <div class="report-stats-grid">
+        <div class="report-stat">
+          <div class="report-stat-value">${stats.totalChecked}/150</div>
+          <div class="report-stat-label">Total check-ins</div>
+        </div>
+        <div class="report-stat">
+          <div class="report-stat-value">${stats.completionPercent}%</div>
+          <div class="report-stat-label">Completion</div>
+        </div>
+        <div class="report-stat">
+          <div class="report-stat-value">${stats.fullDays}</div>
+          <div class="report-stat-label">Full days</div>
+        </div>
+        <div class="report-stat">
+          <div class="report-stat-value">${stats.longestStreak}</div>
+          <div class="report-stat-label">Longest full-day streak</div>
+        </div>
+        <div class="report-stat">
+          <div class="report-stat-value">${stats.recoveryDays}</div>
+          <div class="report-stat-label">Times you returned</div>
+        </div>
+        <div class="report-stat">
+          <div class="report-stat-value">${earnedLeafCount()}/4</div>
+          <div class="report-stat-label">Leaves earned</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-page report-section">
+      <h2 class="report-section-title">Your habits</h2>
+      <div class="report-section-intro">Progress across the five areas you practiced.</div>
+      ${habitBars}
+      <div class="report-insight">${insight}</div>
+    </section>
+
+    <section class="report-page report-section">
+      <h2 class="report-section-title">Your companion world</h2>
+      <div class="report-growth-box">
+        <div class="report-growth-avatar">${
+          companion ? animalSVG(companion.key, companion.fur, companion.patch) : ''
+        }</div>
+        <div class="report-world-name">${world.label}</div>
+        <div class="report-leaves">${'🍃'.repeat(earnedLeafCount())}${'◦'.repeat(4-earnedLeafCount())}</div>
+        <div class="report-world-copy">
+          You and ${firstName} earned ${earnedLeafCount()} of 4 leaves and grew this world through reflection and consistency.
+        </div>
+      </div>
+    </section>
+
+    <section class="report-page report-section">
+      <h2 class="report-section-title">Your weekly reflections</h2>
+      <div class="report-section-intro">The words you wrote along the way are part of the journey too.</div>
+      ${reflections}
+    </section>
+
+    <section class="report-page report-section">
+      <h2 class="report-section-title">A letter from ${firstName}</h2>
+      <div class="report-letter">
+        Dear friend,<br><br>
+        ${companionLetter(firstName)}
+        <br><br>
+        I hope this is not goodbye. Carry what you learned into whatever comes next.
+        <div class="report-letter-signature">With pride,<br>${firstName}</div>
+      </div>
+    </section>
+
+    <div class="report-footer">@khushmani.singh · feelingkhushitoday</div>
+  `;
+}
+
+function openFinalReport(){
+  buildDesignedReport();
+  document.getElementById('reportOverlay').classList.add('show');
+}
+
+function closeFinalReport(){
+  document.getElementById('reportOverlay').classList.remove('show');
+}
+
+document.getElementById('reportPrintBtn').addEventListener('click', () => window.print());
+document.getElementById('reportCloseBtn').addEventListener('click', closeFinalReport);
+document.getElementById('reportOverlay').addEventListener('click', event => {
+  if(event.target.id === 'reportOverlay') closeFinalReport();
+});
+
+
 /* ---------- Final 30-day report ---------- */
 function getProgressStats(){
   let totalChecked = 0;
@@ -1799,7 +2451,7 @@ function showCelebration(){
   }
 }
 
-document.getElementById('downloadReportBtn').addEventListener('click', downloadFinalReport);
+document.getElementById('downloadReportBtn').addEventListener('click', openFinalReport);
 
 document.getElementById('celebrateCloseBtn').addEventListener('click', () => {
   document.getElementById('celebrateOverlay').classList.remove('show');
@@ -2053,6 +2705,7 @@ function renderCompanionBadge(){
   document.getElementById('companionBadgeSvg').innerHTML = animalSVG(companion.key, companion.fur, companion.patch);
   document.getElementById('companionBadgeName').textContent = companion.name;
   renderGrowthWorld();
+  renderEncouragement();
 }
 
 function buildAvatarPicker(){
