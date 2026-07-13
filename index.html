@@ -334,6 +334,136 @@
     color:var(--dark-soft);
   }
 
+
+  /* Weekly habit report */
+  .weekly-report-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(31,42,28,.62);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1350;
+    padding:22px;
+  }
+  .weekly-report-overlay.show{ display:flex; }
+
+  .weekly-report-card{
+    width:100%;
+    max-width:430px;
+    max-height:90vh;
+    overflow:auto;
+    background:var(--sage);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:28px 24px 22px;
+    box-shadow:0 22px 65px rgba(0,0,0,.32);
+    animation:pop-in .35s cubic-bezier(.2,1.4,.4,1);
+  }
+  .weekly-report-kicker{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--dark-soft);
+    margin-bottom:7px;
+  }
+  .weekly-report-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:25px;
+    margin-bottom:5px;
+  }
+  .weekly-report-sub{
+    font-size:13px;
+    line-height:1.45;
+    color:var(--dark-soft);
+    margin-bottom:18px;
+  }
+  .weekly-chart-row{
+    margin-bottom:14px;
+  }
+  .weekly-chart-label{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-size:12px;
+    font-weight:600;
+    margin-bottom:5px;
+  }
+  .weekly-chart-track{
+    height:12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+    background:rgba(247,249,244,.52);
+  }
+  .weekly-chart-fill{
+    height:100%;
+    background:var(--dark);
+    border-radius:8px;
+    transition:width .55s ease;
+  }
+  .weekly-report-summary{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    margin:18px 0 14px;
+    font-size:13px;
+    line-height:1.5;
+    color:var(--dark-soft);
+  }
+  .weekly-report-summary b{ color:var(--dark); }
+  .weekly-report-leaf{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(247,249,244,.45);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:12px 13px;
+    margin-bottom:14px;
+  }
+  .weekly-report-leaf-icon{
+    width:38px;
+    height:25px;
+    flex-shrink:0;
+    background:#6F8B5D;
+    border:1.5px solid var(--dark);
+    border-radius:100% 0 100% 0;
+    transform:rotate(-18deg);
+  }
+  .weekly-report-leaf-text{
+    font-size:12px;
+    line-height:1.4;
+    color:var(--dark-soft);
+  }
+  .weekly-report-primary{
+    width:100%;
+    background:var(--dark);
+    color:var(--white);
+    border:none;
+    border-radius:9px;
+    padding:11px 15px;
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .weekly-report-secondary{
+    width:100%;
+    margin-top:9px;
+    background:transparent;
+    color:var(--dark-soft);
+    border:none;
+    text-decoration:underline;
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    cursor:pointer;
+  }
+
   /* Final report overlay */
   .report-overlay{
     position:fixed;
@@ -1363,6 +1493,23 @@
 
 
 
+
+<div class="weekly-report-overlay" id="weeklyReportOverlay">
+  <div class="weekly-report-card">
+    <div class="weekly-report-kicker" id="weeklyReportKicker">Weekly report</div>
+    <div class="weekly-report-title" id="weeklyReportTitle">Your week at a glance</div>
+    <div class="weekly-report-sub" id="weeklyReportSub"></div>
+    <div id="weeklyReportChart"></div>
+    <div class="weekly-report-summary" id="weeklyReportSummary"></div>
+    <div class="weekly-report-leaf">
+      <div class="weekly-report-leaf-icon"></div>
+      <div class="weekly-report-leaf-text" id="weeklyReportLeafText"></div>
+    </div>
+    <button class="weekly-report-primary" id="weeklyReportPrimaryBtn">Continue</button>
+    <button class="weekly-report-secondary" id="weeklyReportCloseBtn">Close</button>
+  </div>
+</div>
+
 <div class="report-overlay" id="reportOverlay">
   <div class="report-shell">
     <div class="report-toolbar">
@@ -1483,11 +1630,10 @@ function toggleCheck(day, catKey){
   const isComplete = CATEGORIES.every(c => state[day][c.key]);
   scheduleSave();
   render();
-  checkForCompletion();
   if(isComplete && !wasComplete){
     handleDayCompleted(day);
-    checkForWeeklyJournal(day);
   }
+  checkForWeeklyJournal(day);
   refreshJournalButtons();
   renderEncouragement();
 }
@@ -1558,9 +1704,9 @@ function buildWeeks(){
     }
 
     const journalBtn = document.createElement('button');
-    journalBtn.className = 'week-journal-btn';
+    journalBtn.className = 'week-journal-btn show';
     journalBtn.dataset.weekJournal = week.num;
-    journalBtn.textContent = `View / edit Week ${week.num} journal`;
+    journalBtn.textContent = `Finish Week ${week.num} & Reflect`;
     journalBtn.addEventListener('click', (event) => {
       event.stopPropagation();
       openJournal(week.num, false);
@@ -1807,6 +1953,11 @@ function showLeafReward(weekNum){
 
 function closeLeafReward(){
   document.getElementById('leafRewardOverlay').classList.remove('show');
+  if(pendingWeeklyReportWeek){
+    const weekNum = pendingWeeklyReportWeek;
+    pendingWeeklyReportWeek = null;
+    setTimeout(() => showWeeklyReport(weekNum), 180);
+  }
 }
 
 function renderGrowthWorld(){
@@ -1923,7 +2074,7 @@ function getWeekForDay(day){
 
 function checkForWeeklyJournal(day){
   const week = getWeekForDay(day);
-  if(!week || !weekIsComplete(week.num)) return;
+  if(!week || day !== week.end || !dayStarted(day)) return;
 
   const prompted = getPromptedWeeks();
   if(prompted[week.num]) return;
@@ -1939,7 +2090,7 @@ function openJournal(weekNum, automatic){
   activeJournalWeek = weekNum;
   const entries = getJournalEntries();
 
-  document.getElementById('journalKicker').textContent = `Week ${week.num} complete`;
+  document.getElementById('journalKicker').textContent = `End of Week ${week.num}`;
   document.getElementById('journalTitle').textContent =
     week.num === 4 ? 'You made it. What changed?' : 'Pause and reflect.';
   document.getElementById('journalPrompt').innerHTML =
@@ -1968,11 +2119,10 @@ function refreshJournalButtons(){
     const btn = document.querySelector(`[data-week-journal="${week.num}"]`);
     if(!btn) return;
 
-    const shouldShow = weekIsComplete(week.num) || !!entries[week.num];
-    btn.classList.toggle('show', shouldShow);
+    btn.classList.add('show');
     btn.textContent = entries[week.num]
       ? `View / edit Week ${week.num} journal`
-      : `Write Week ${week.num} journal`;
+      : `Finish Week ${week.num} & Reflect`;
   });
 }
 
@@ -1991,7 +2141,16 @@ document.getElementById('journalSaveBtn').addEventListener('click', () => {
 
   setTimeout(() => {
     closeJournal();
-    if(hasEntry) awardLeafForWeek(savedWeek);
+
+    if(hasEntry){
+      pendingWeeklyReportWeek = savedWeek;
+      const awarded = awardLeafForWeek(savedWeek);
+
+      if(!awarded){
+        pendingWeeklyReportWeek = null;
+        showWeeklyReport(savedWeek);
+      }
+    }
   }, 700);
 });
 
@@ -2008,6 +2167,133 @@ document.addEventListener('keydown', event => {
 });
 
 
+
+
+
+/* ---------- Weekly habit reports ---------- */
+let activeWeeklyReport = null;
+let pendingWeeklyReportWeek = null;
+
+function getWeeklyHabitStats(weekNum){
+  const week = WEEKS.find(w => w.num === weekNum);
+  const counts = {};
+  CATEGORIES.forEach(category => counts[category.key] = 0);
+
+  let total = 0;
+  let fullDays = 0;
+  let startedDays = 0;
+
+  for(let day = week.start; day <= week.end; day++){
+    const d = state[day] || emptyDay();
+    let dayCount = 0;
+
+    CATEGORIES.forEach(category => {
+      if(d[category.key]){
+        counts[category.key]++;
+        dayCount++;
+        total++;
+      }
+    });
+
+    if(dayCount > 0) startedDays++;
+    if(dayCount === CATEGORIES.length) fullDays++;
+  }
+
+  const possible = (week.end - week.start + 1) * CATEGORIES.length;
+  return {
+    week,
+    counts,
+    total,
+    possible,
+    fullDays,
+    startedDays,
+    percent: Math.round((total / possible) * 100)
+  };
+}
+
+function weeklyStrongestAndGrowth(stats){
+  const ranked = Object.entries(stats.counts).sort((a,b) => b[1] - a[1]);
+  return {
+    strongest: ranked[0],
+    growth: ranked[ranked.length - 1]
+  };
+}
+
+function showWeeklyReport(weekNum){
+  activeWeeklyReport = weekNum;
+  const stats = getWeeklyHabitStats(weekNum);
+  const ranked = weeklyStrongestAndGrowth(stats);
+  const firstName = companion ? companion.name.split(' ')[0] : 'Your companion';
+  const world = companion ? COMPANION_WORLDS[companion.key] : null;
+
+  document.getElementById('weeklyReportKicker').textContent = `Week ${weekNum} reflection saved`;
+  document.getElementById('weeklyReportTitle').textContent = `Your Week ${weekNum} report`;
+  document.getElementById('weeklyReportSub').textContent =
+    `You completed ${stats.total} of ${stats.possible} possible check-ins. This report is information—not a grade.`;
+
+  document.getElementById('weeklyReportChart').innerHTML = CATEGORIES.map(category => {
+    const count = stats.counts[category.key];
+    const totalDays = stats.week.end - stats.week.start + 1;
+    const percent = Math.round((count / totalDays) * 100);
+    return `
+      <div class="weekly-chart-row">
+        <div class="weekly-chart-label">
+          <span>${categoryLabel(category.key)}</span>
+          <span>${count}/${totalDays}</span>
+        </div>
+        <div class="weekly-chart-track">
+          <div class="weekly-chart-fill" style="width:${percent}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('weeklyReportSummary').innerHTML = `
+    <b>Strongest habit:</b> ${categoryLabel(ranked.strongest[0])}<br>
+    <b>Area to keep nurturing:</b> ${categoryLabel(ranked.growth[0])}<br>
+    <b>Full days:</b> ${stats.fullDays} &nbsp;·&nbsp;
+    <b>Days started:</b> ${stats.startedDays}<br><br>
+    ${stats.percent === 100
+      ? 'You completed every check-in this week. Let yourself recognize that consistency.'
+      : 'You did not need a perfect week to reflect, grow, and continue.'}
+  `;
+
+  document.getElementById('weeklyReportLeafText').textContent =
+    world
+      ? `${firstName}'s world gained a new leaf because you paused to reflect.`
+      : 'A new leaf grew because you paused to reflect.';
+
+  const primary = document.getElementById('weeklyReportPrimaryBtn');
+  primary.textContent = weekNum === 4 ? 'Read My Final Story' : `Continue to Week ${weekNum + 1}`;
+
+  document.getElementById('weeklyReportOverlay').classList.add('show');
+}
+
+function closeWeeklyReport(){
+  document.getElementById('weeklyReportOverlay').classList.remove('show');
+  activeWeeklyReport = null;
+}
+
+function finishWeeklyReport(){
+  const weekNum = activeWeeklyReport;
+  closeWeeklyReport();
+
+  if(weekNum === 4){
+    if(!state.__celebrated){
+      state.__celebrated = true;
+      scheduleSave();
+    }
+    const savedEmail = getNotifyEmail();
+    if(savedEmail) sendCompletionEmailJS(savedEmail);
+    openFinalReport();
+  }
+}
+
+document.getElementById('weeklyReportPrimaryBtn').addEventListener('click', finishWeeklyReport);
+document.getElementById('weeklyReportCloseBtn').addEventListener('click', closeWeeklyReport);
+document.getElementById('weeklyReportOverlay').addEventListener('click', event => {
+  if(event.target.id === 'weeklyReportOverlay') closeWeeklyReport();
+});
 
 
 /* ---------- Designed final report ---------- */
@@ -2202,9 +2488,40 @@ function buildDesignedReport(){
     </section>
 
     <section class="report-page report-section">
-      <h2 class="report-section-title">Your weekly reflections</h2>
-      <div class="report-section-intro">The words you wrote along the way are part of the journey too.</div>
-      ${reflections}
+      <h2 class="report-section-title">Your weekly journey</h2>
+      <div class="report-section-intro">Each week includes your habit pattern and the reflection you saved.</div>
+      ${WEEKS.map(week => {
+        const weekly = getWeeklyHabitStats(week.num);
+        const bars = CATEGORIES.map(category => {
+          const totalDays = week.end - week.start + 1;
+          const count = weekly.counts[category.key];
+          const percent = Math.round((count / totalDays) * 100);
+          return `
+            <div class="report-habit">
+              <div class="report-habit-top">
+                <span>${categoryLabel(category.key)}</span>
+                <span>${count}/${totalDays}</span>
+              </div>
+              <div class="report-habit-track">
+                <div class="report-habit-fill" style="width:${percent}%"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        const reflectionText = (entries[week.num] || 'No reflection was entered for this week.')
+          .replace(/&/g,'&amp;')
+          .replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;');
+
+        return `
+          <div class="report-reflection">
+            <div class="report-reflection-title">Week ${week.num} — ${week.name}</div>
+            ${bars}
+            <div class="report-reflection-text">${reflectionText}</div>
+          </div>
+        `;
+      }).join('')}
     </section>
 
     <section class="report-page report-section">
@@ -2459,17 +2776,8 @@ document.getElementById('celebrateCloseBtn').addEventListener('click', () => {
 });
 
 function checkForCompletion(){
-  const total = 30 * CATEGORIES.length;
-  let totalChecked = 0;
-  for(let day = 1; day <= 30; day++){
-    const d = state[day] || emptyDay();
-    CATEGORIES.forEach(c => { if(d[c.key]) totalChecked++; });
-  }
-  if(totalChecked === total && !state.__celebrated){
-    state.__celebrated = true;
-    scheduleSave();
-    showCelebration();
-  }
+  // Completion is based on finishing the Week 4 reflection,
+  // not on achieving 150/150 check-ins.
 }
 
 /* ---------- Daily Companion Facts ---------- */
