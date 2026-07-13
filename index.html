@@ -244,6 +244,12 @@
     opacity: 0.8;
   }
 
+
+  .wrap > .email-card:first-of-type{
+    margin-top:0;
+    margin-bottom:22px;
+  }
+
   /* Email box */
   .email-card{
     background: var(--panel);
@@ -1410,21 +1416,20 @@
   <h1>The 30-Day<br>Discipline Challenge</h1>
   <div class="subtitle">Tap to check off. Your progress saves automatically.</div>
 
-  <div class="companion-badge" id="companionBadge" style="display:none;">
-    <span id="companionBadgeSvg"></span>
-    <div class="companion-badge-text">Your companion: <b id="companionBadgeName"></b></div>
-    <button class="companion-change" id="companionChangeBtn">change</button>
-  </div>
-
-
-
-  <div class="encouragement-card" id="encouragementCard">
-    <div class="encouragement-avatar" id="encouragementAvatar"></div>
-    <div>
-      <div class="encouragement-title" id="encouragementTitle"></div>
-      <div class="encouragement-text" id="encouragementText"></div>
+  <div class="email-card">
+    <div class="email-title">Daily Companion Check-In</div>
+    <div class="email-desc" id="notifyDesc">Turn this on and your companion sends you a motivational note every time you complete a day.</div>
+    <div class="email-row">
+      <input type="email" class="email-input" id="notifyEmailInput" placeholder="your@email.com">
+      <button class="email-send" id="notifySaveBtn">Turn On</button>
     </div>
+    <button class="reset-btn" id="notifyOffBtn" style="margin-top:10px; display:none;">Turn off daily check-ins</button>
   </div>
+
+
+
+
+
 
   <div class="growth-card" id="growthCard" style="display:none;">
     <div class="growth-top">
@@ -1450,6 +1455,20 @@
     </div>
   </div>
 
+  <div class="companion-badge" id="companionBadge" style="display:none;">
+    <span id="companionBadgeSvg"></span>
+    <div class="companion-badge-text">Your companion: <b id="companionBadgeName"></b></div>
+    <button class="companion-change" id="companionChangeBtn">change</button>
+  </div>
+
+  <div class="encouragement-card" id="encouragementCard">
+    <div class="encouragement-avatar" id="encouragementAvatar"></div>
+    <div>
+      <div class="encouragement-title" id="encouragementTitle"></div>
+      <div class="encouragement-text" id="encouragementText"></div>
+    </div>
+  </div>
+
   <div class="progress-card">
     <div class="progress-top">
       <div class="progress-label">Overall Progress</div>
@@ -1464,24 +1483,6 @@
 
   <div id="weeksContainer"></div>
 
-  <div class="email-card">
-    <div class="email-title">Email My Progress</div>
-    <div class="email-desc">Get a snapshot of where you're at, sent straight to your inbox.</div>
-    <div class="email-row">
-      <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
-      <button class="email-send" id="emailSendBtn">Send</button>
-    </div>
-  </div>
-
-  <div class="email-card">
-    <div class="email-title">Daily Companion Check-In</div>
-    <div class="email-desc" id="notifyDesc">Turn this on and your companion sends you a motivational note every time you complete a day.</div>
-    <div class="email-row">
-      <input type="email" class="email-input" id="notifyEmailInput" placeholder="your@email.com">
-      <button class="email-send" id="notifySaveBtn">Turn On</button>
-    </div>
-    <button class="reset-btn" id="notifyOffBtn" style="margin-top:10px; display:none;">Turn off daily check-ins</button>
-  </div>
 
   <div class="footer-row">
     <div class="handle">@khushmani.singh</div>
@@ -2632,7 +2633,7 @@ function downloadFinalReport(){
 }
 
 
-/* ---------- Email My Progress (mailto) ---------- */
+/* ---------- Legacy progress-summary helper ---------- */
 function buildProgressSummary(){
   let totalChecked = 0, fullDays = 0, startedDays = 0;
   const dayLines = [];
@@ -2665,10 +2666,6 @@ function sendProgressEmail(emailValue){
   const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   window.location.href = mailtoUrl;
 }
-
-document.getElementById('emailSendBtn').addEventListener('click', () => {
-  sendProgressEmail(document.getElementById('emailInput').value);
-});
 
 document.getElementById('notifySaveBtn').addEventListener('click', () => {
   const email = document.getElementById('notifyEmailInput').value.trim();
