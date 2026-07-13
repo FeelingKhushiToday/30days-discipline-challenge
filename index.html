@@ -475,8 +475,7 @@
     position: relative;
     width: 110px;
     margin: 0 auto 10px;
-    animation: dance 0.6s ease-in-out infinite;
-    transform-origin: bottom center;
+    animation: bob 0.9s ease-in-out infinite;
   }
   .celebrate-avatar-wrap svg{ width: 110px; height: 110px; }
   .party-hat{
@@ -485,22 +484,28 @@
     left: 50%;
     transform: translateX(-50%) rotate(-8deg);
     width: 46px;
-    animation: hat-bob 0.6s ease-in-out infinite;
   }
-  @keyframes dance{
-    0%, 100%{ transform: rotate(-8deg) translateY(0); }
-    25%{ transform: rotate(6deg) translateY(-4px); }
-    50%{ transform: rotate(-4deg) translateY(0); }
-    75%{ transform: rotate(8deg) translateY(-6px); }
+  .wave-hand{
+    position: absolute;
+    top: 6px;
+    right: -14px;
+    width: 34px;
+    height: 34px;
+    transform-origin: 70% 90%;
+    animation: wave 0.9s ease-in-out infinite;
   }
-  @keyframes hat-bob{
-    0%, 100%{ transform: translateX(-50%) rotate(-8deg) translateY(0); }
-    25%{ transform: translateX(-50%) rotate(4deg) translateY(-3px); }
-    50%{ transform: translateX(-50%) rotate(-10deg) translateY(0); }
-    75%{ transform: translateX(-50%) rotate(6deg) translateY(-4px); }
+  @keyframes bob{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-8px); }
+  }
+  @keyframes wave{
+    0%, 100%{ transform: rotate(0deg); }
+    25%{ transform: rotate(22deg); }
+    50%{ transform: rotate(-6deg); }
+    75%{ transform: rotate(22deg); }
   }
   @media (prefers-reduced-motion: reduce){
-    .celebrate-avatar-wrap, .party-hat{ animation: none; }
+    .celebrate-avatar-wrap, .wave-hand{ animation: none; }
   }
 
   /* Day-complete toast */
@@ -612,6 +617,13 @@
         <circle cx="17" cy="27" r="2" fill="#F7F9F4"/>
       </svg>
       <span id="celebrateAvatarSvg"></span>
+      <svg class="wave-hand" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="18" cy="30" rx="7" ry="8" fill="#F0D9A8" stroke="#1F2A1C" stroke-width="2"/>
+        <ellipse cx="10" cy="16" rx="4" ry="7" fill="#F0D9A8" stroke="#1F2A1C" stroke-width="1.8" transform="rotate(-15 10 16)"/>
+        <ellipse cx="17" cy="10" rx="4" ry="7.5" fill="#F0D9A8" stroke="#1F2A1C" stroke-width="1.8" transform="rotate(-2 17 10)"/>
+        <ellipse cx="25" cy="11" rx="4" ry="7" fill="#F0D9A8" stroke="#1F2A1C" stroke-width="1.8" transform="rotate(10 25 11)"/>
+        <ellipse cx="31" cy="17" rx="3.6" ry="6.5" fill="#F0D9A8" stroke="#1F2A1C" stroke-width="1.8" transform="rotate(24 31 17)"/>
+      </svg>
     </div>
     <div class="celebrate-title">You did it.</div>
     <div class="celebrate-text" id="celebrateText">30 days. 150 check-ins. You showed up for yourself every single day — that's the whole point.</div>
@@ -907,19 +919,21 @@ document.getElementById('celebrateSendBtn').addEventListener('click', () => {
 });
 
 /* ---------- Celebration + confetti ---------- */
+let confettiInterval = null;
+
 function launchConfetti(){
-  const colors = ['#1F2A1C', '#8FA083', '#D8B26E', '#F7F9F4', '#5C7350'];
-  const count = 60;
+  const colors = ['#1F2A1C', '#8FA083', '#D8B26E', '#F7F9F4', '#5C7350', '#C97B4A'];
+  const count = 90;
   for(let i = 0; i < count; i++){
     const piece = document.createElement('div');
     piece.className = 'confetti-piece';
     piece.style.left = Math.random() * 100 + 'vw';
     piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+    piece.style.animationDuration = (2.5 + Math.random() * 2.5) + 's';
     piece.style.animationDelay = (Math.random() * 0.6) + 's';
     piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
     document.body.appendChild(piece);
-    setTimeout(() => piece.remove(), 5200);
+    setTimeout(() => piece.remove(), 5800);
   }
 }
 
@@ -930,6 +944,9 @@ function showCelebration(){
   }
   document.getElementById('celebrateOverlay').classList.add('show');
   launchConfetti();
+  clearInterval(confettiInterval);
+  confettiInterval = setInterval(launchConfetti, 900);
+  setTimeout(() => clearInterval(confettiInterval), 15000);
 
   const savedEmail = getNotifyEmail();
   if(savedEmail){
@@ -943,6 +960,7 @@ function showCelebration(){
 
 document.getElementById('celebrateCloseBtn').addEventListener('click', () => {
   document.getElementById('celebrateOverlay').classList.remove('show');
+  clearInterval(confettiInterval);
 });
 
 function checkForCompletion(){
