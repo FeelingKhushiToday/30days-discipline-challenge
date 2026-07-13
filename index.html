@@ -296,6 +296,362 @@
   }
   .email-send:active{ opacity: 0.85; }
 
+
+
+  /* Companion growth world */
+  .growth-card{
+    position:relative;
+    overflow:hidden;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:20px;
+    min-height:170px;
+  }
+  .growth-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .growth-heading{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:18px;
+  }
+  .growth-sub{
+    font-size:12px;
+    color:var(--dark-soft);
+    margin-top:2px;
+  }
+  .growth-count{
+    font-size:12px;
+    font-weight:700;
+    color:var(--dark-soft);
+    white-space:nowrap;
+  }
+  .growth-scene{
+    position:relative;
+    height:112px;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid rgba(31,42,28,0.16);
+    background:linear-gradient(#DDE8D8 0 60%, #B8CAA9 60% 100%);
+  }
+  .growth-scene::before{
+    content:"";
+    position:absolute;
+    inset:auto 0 0;
+    height:38%;
+    background:rgba(110,137,91,0.22);
+    border-radius:50% 50% 0 0 / 24% 24% 0 0;
+  }
+  .growth-avatar{
+    position:absolute;
+    left:16px;
+    bottom:6px;
+    width:82px;
+    height:82px;
+    z-index:3;
+  }
+  .growth-avatar svg{ width:100%; height:100%; display:block; }
+
+  .growth-plant{
+    position:absolute;
+    right:24px;
+    bottom:13px;
+    width:110px;
+    height:90px;
+    z-index:2;
+  }
+  .growth-stem{
+    position:absolute;
+    left:53px;
+    bottom:5px;
+    width:4px;
+    height:70px;
+    border-radius:3px;
+    background:#526A45;
+    transform-origin:bottom;
+    transition:height .5s ease;
+  }
+  .growth-branch{
+    position:absolute;
+    width:35px;
+    height:3px;
+    background:#526A45;
+    border-radius:3px;
+    opacity:.9;
+  }
+  .growth-branch.b1{ left:26px; bottom:34px; transform:rotate(-28deg); }
+  .growth-branch.b2{ left:51px; bottom:50px; transform:rotate(27deg); }
+  .growth-branch.b3{ left:30px; bottom:63px; transform:rotate(-22deg); }
+
+  .growth-leaf{
+    position:absolute;
+    width:25px;
+    height:15px;
+    background:#6F8B5D;
+    border:1.5px solid #1F2A1C;
+    border-radius:100% 0 100% 0;
+    opacity:.14;
+    transform:scale(.65) rotate(-18deg);
+    transition:opacity .35s ease, transform .5s cubic-bezier(.2,1.5,.4,1);
+  }
+  .growth-leaf.earned{
+    opacity:1;
+    transform:scale(1) rotate(-18deg);
+  }
+  .growth-leaf.l1{ left:18px; bottom:25px; }
+  .growth-leaf.l2{ right:10px; bottom:43px; transform:scale(.65) rotate(18deg); }
+  .growth-leaf.l2.earned{ transform:scale(1) rotate(18deg); }
+  .growth-leaf.l3{ left:20px; bottom:57px; transform:scale(.65) rotate(-10deg); }
+  .growth-leaf.l3.earned{ transform:scale(1) rotate(-10deg); }
+  .growth-leaf.l4{ right:20px; bottom:70px; transform:scale(.65) rotate(28deg); }
+  .growth-leaf.l4.earned{ transform:scale(1) rotate(28deg); }
+
+  .growth-world-label{
+    position:absolute;
+    right:12px;
+    top:10px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+    color:rgba(31,42,28,.6);
+  }
+
+  /* Character-specific worlds */
+  .growth-scene.world-fox{
+    background:linear-gradient(#D9E6D2 0 58%, #A9BE96 58% 100%);
+  }
+  .growth-scene.world-panda{
+    background:linear-gradient(#E4EBDD 0 58%, #B7C99F 58% 100%);
+  }
+  .growth-scene.world-bunny{
+    background:linear-gradient(#E6E9D7 0 58%, #C4D3A8 58% 100%);
+  }
+  .growth-scene.world-swan{
+    background:linear-gradient(#DDE8EC 0 58%, #AFC9D0 58% 100%);
+  }
+  .growth-scene.world-lion{
+    background:linear-gradient(#E9D8AF 0 58%, #C9AB69 58% 100%);
+  }
+  .growth-scene.world-otter{
+    background:linear-gradient(#DCE7DD 0 58%, #A8C6BB 58% 100%);
+  }
+
+  .growth-scene.world-panda .growth-stem,
+  .growth-scene.world-panda .growth-branch{ background:#6B7F4A; }
+  .growth-scene.world-panda .growth-leaf{ background:#799957; }
+
+  .growth-scene.world-swan .growth-plant{
+    right:18px;
+  }
+  .growth-scene.world-swan .growth-stem{
+    background:#5D7B55;
+  }
+  .growth-scene.world-swan .growth-leaf{
+    background:#7E9A70;
+  }
+
+  .growth-scene.world-lion .growth-leaf{
+    background:#7B8A4B;
+  }
+  .growth-scene.world-lion .growth-stem,
+  .growth-scene.world-lion .growth-branch{
+    background:#6E5D34;
+  }
+
+  .growth-scene.world-otter .growth-leaf{
+    background:#6F9279;
+  }
+
+  /* Leaf reward overlay */
+  .leaf-reward-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(31,42,28,.58);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1200;
+    padding:24px;
+  }
+  .leaf-reward-overlay.show{ display:flex; }
+  .leaf-reward-card{
+    background:var(--sage);
+    border:1px solid var(--line);
+    border-radius:18px;
+    width:100%;
+    max-width:390px;
+    padding:30px 24px 24px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+    animation:pop-in .35s cubic-bezier(.2,1.4,.4,1);
+  }
+  .leaf-reward-icon{
+    width:78px;
+    height:52px;
+    margin:0 auto 8px;
+    position:relative;
+    animation:leafFloat 1.4s ease-in-out infinite;
+  }
+  .leaf-reward-icon::before{
+    content:"";
+    position:absolute;
+    inset:7px 12px;
+    background:#6F8B5D;
+    border:2px solid #1F2A1C;
+    border-radius:100% 0 100% 0;
+    transform:rotate(-18deg);
+  }
+  .leaf-reward-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:24px;
+    margin-bottom:8px;
+  }
+  .leaf-reward-text{
+    font-size:14px;
+    line-height:1.5;
+    color:var(--dark-soft);
+    margin-bottom:18px;
+  }
+  .leaf-reward-close{
+    width:100%;
+    background:var(--dark);
+    color:var(--white);
+    border:none;
+    border-radius:9px;
+    padding:11px 16px;
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  @keyframes leafFloat{
+    0%,100%{ transform:translateY(0) rotate(-3deg); }
+    50%{ transform:translateY(-7px) rotate(4deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .leaf-reward-icon{ animation:none; }
+  }
+
+  /* Weekly journal */
+  .journal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(31,42,28,0.58);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1100;
+    padding:24px;
+  }
+  .journal-overlay.show{ display:flex; }
+
+  .journal-card{
+    background:var(--sage);
+    border:1px solid var(--line);
+    border-radius:18px;
+    width:100%;
+    max-width:420px;
+    padding:28px 24px 22px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    animation:pop-in .35s cubic-bezier(.2,1.4,.4,1);
+  }
+  .journal-kicker{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+    color:var(--dark-soft);
+    text-transform:uppercase;
+    margin-bottom:7px;
+  }
+  .journal-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:24px;
+    margin:0 0 7px;
+  }
+  .journal-prompt{
+    font-size:13px;
+    line-height:1.5;
+    color:var(--dark-soft);
+    margin-bottom:14px;
+  }
+  .journal-textarea{
+    width:100%;
+    min-height:170px;
+    resize:vertical;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:13px 14px;
+    background:var(--white);
+    color:var(--dark);
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    line-height:1.5;
+    outline:none;
+  }
+  .journal-textarea:focus{ border-color:var(--dark); }
+  .journal-actions{
+    display:flex;
+    gap:9px;
+    margin-top:13px;
+  }
+  .journal-save{
+    flex:1;
+    background:var(--dark);
+    color:var(--white);
+    border:none;
+    border-radius:9px;
+    padding:11px 16px;
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .journal-later{
+    background:transparent;
+    color:var(--dark-soft);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:11px 15px;
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .journal-status{
+    min-height:17px;
+    margin-top:9px;
+    font-size:12px;
+    color:var(--dark-soft);
+    text-align:center;
+  }
+  .week-journal-btn{
+    width:100%;
+    margin:7px 0 4px;
+    padding:9px 12px;
+    border:1px dashed var(--line);
+    border-radius:9px;
+    background:rgba(247,249,244,0.35);
+    color:var(--dark-soft);
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    display:none;
+  }
+  .week-journal-btn.show{ display:block; }
+
   /* Celebration overlay */
   .celebrate-overlay{
     position: fixed;
@@ -367,6 +723,14 @@
       transform: translateY(110vh) rotate(540deg);
       opacity: 0.3;
     }
+  }
+
+
+  .final-report-note{
+    font-size:12px;
+    color:var(--dark-soft);
+    line-height:1.4;
+    margin:8px 0 12px;
   }
 
   /* Avatar picker */
@@ -588,6 +952,31 @@
     <button class="companion-change" id="companionChangeBtn">change</button>
   </div>
 
+
+  <div class="growth-card" id="growthCard" style="display:none;">
+    <div class="growth-top">
+      <div>
+        <div class="growth-heading" id="growthHeading">Your companion's world</div>
+        <div class="growth-sub" id="growthSub">Complete each weekly reflection to help it grow.</div>
+      </div>
+      <div class="growth-count" id="growthCount">0 / 4 leaves</div>
+    </div>
+    <div class="growth-scene" id="growthScene">
+      <div class="growth-world-label" id="growthWorldLabel"></div>
+      <div class="growth-avatar" id="growthAvatar"></div>
+      <div class="growth-plant">
+        <div class="growth-stem"></div>
+        <div class="growth-branch b1"></div>
+        <div class="growth-branch b2"></div>
+        <div class="growth-branch b3"></div>
+        <div class="growth-leaf l1" data-leaf="1"></div>
+        <div class="growth-leaf l2" data-leaf="2"></div>
+        <div class="growth-leaf l3" data-leaf="3"></div>
+        <div class="growth-leaf l4" data-leaf="4"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="progress-card">
     <div class="progress-top">
       <div class="progress-label">Overall Progress</div>
@@ -628,6 +1017,35 @@
   <div class="save-note">Progress saves to this device only. Bookmark this page to come back to it.</div>
 </div>
 
+
+
+<div class="leaf-reward-overlay" id="leafRewardOverlay">
+  <div class="leaf-reward-card">
+    <div class="leaf-reward-icon"></div>
+    <div class="leaf-reward-title" id="leafRewardTitle">You earned a leaf.</div>
+    <div class="leaf-reward-text" id="leafRewardText"></div>
+    <button class="leaf-reward-close" id="leafRewardCloseBtn">Add it to our world</button>
+  </div>
+</div>
+
+<div class="journal-overlay" id="journalOverlay">
+  <div class="journal-card" role="dialog" aria-modal="true" aria-labelledby="journalTitle">
+    <div class="journal-kicker" id="journalKicker">Week reflection</div>
+    <div class="journal-title" id="journalTitle">Pause and reflect.</div>
+    <div class="journal-prompt" id="journalPrompt"></div>
+    <textarea
+      class="journal-textarea"
+      id="journalTextarea"
+      placeholder="Write whatever is coming up for you..."
+    ></textarea>
+    <div class="journal-actions">
+      <button class="journal-save" id="journalSaveBtn">Save entry</button>
+      <button class="journal-later" id="journalLaterBtn">Finish later</button>
+    </div>
+    <div class="journal-status" id="journalStatus"></div>
+  </div>
+</div>
+
 <div class="celebrate-overlay" id="celebrateOverlay">
   <div class="celebrate-card">
     <div class="celebrate-avatar-wrap">
@@ -640,7 +1058,8 @@
       <input type="email" class="email-input" id="celebrateEmailInput" placeholder="your@email.com">
       <button class="email-send" id="celebrateSendBtn">Send</button>
     </div>
-    <div class="email-desc" style="margin-bottom:0;">Get your completion note sent to your inbox.</div>
+    <div class="email-desc" style="margin-bottom:12px;">Get your complete 30-day report, including all weekly reflections.</div>
+    <button class="email-send" id="downloadReportBtn" style="width:100%; padding:11px 16px; margin-bottom:4px;">Download Final Report</button>
     <button class="celebrate-close" id="celebrateCloseBtn">Close</button>
   </div>
 </div>
@@ -713,7 +1132,9 @@ function toggleCheck(day, catKey){
   checkForCompletion();
   if(isComplete && !wasComplete){
     handleDayCompleted(day);
+    checkForWeeklyJournal(day);
   }
+  refreshJournalButtons();
 }
 
 function dayComplete(day){
@@ -781,6 +1202,16 @@ function buildWeeks(){
       weekEl.appendChild(row);
     }
 
+    const journalBtn = document.createElement('button');
+    journalBtn.className = 'week-journal-btn';
+    journalBtn.dataset.weekJournal = week.num;
+    journalBtn.textContent = `View / edit Week ${week.num} journal`;
+    journalBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      openJournal(week.num, false);
+    });
+    weekEl.appendChild(journalBtn);
+
     container.appendChild(weekEl);
   });
 }
@@ -818,6 +1249,7 @@ function render(){
   document.getElementById('progressBar').style.width = `${(totalChecked/total*100).toFixed(1)}%`;
   document.getElementById('fullDays').textContent = fullDays;
   document.getElementById('startedDays').textContent = startedDays;
+  refreshJournalButtons();
 }
 
 document.getElementById('resetBtn').addEventListener('click', () => {
@@ -826,10 +1258,410 @@ document.getElementById('resetBtn').addEventListener('click', () => {
     state.__celebrated = false;
     try{
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.removeItem(JOURNAL_STORAGE_KEY);
+      localStorage.removeItem(JOURNAL_PROMPTED_KEY);
+      localStorage.removeItem(LEAF_REWARD_KEY);
     }catch(e){ console.error(e); }
     render();
   }
 });
+
+
+
+/* ---------- Companion growth rewards ---------- */
+const LEAF_REWARD_KEY = 'discipline-companion-leaves-v1';
+
+const COMPANION_WORLDS = {
+  fox: {
+    label: 'Khushi’s forest',
+    leafNames: ['Leaf of Beginning', 'Leaf of Consistency', 'Leaf of Resilience', 'Leaf of Growth'],
+    messages: [
+      'Khushi found the first new leaf near her den. Your reflection helped her forest begin to grow.',
+      'Another leaf has appeared in Khushi’s forest. Consistency is starting to take root.',
+      'Khushi’s forest is becoming stronger, just like the habits you kept returning to.',
+      'Khushi’s forest is flourishing. You and your companion grew through all four weeks together.'
+    ]
+  },
+  panda: {
+    label: 'Sukoon’s bamboo grove',
+    leafNames: ['Bamboo Leaf of Beginning', 'Bamboo Leaf of Patience', 'Bamboo Leaf of Consistency', 'Bamboo Leaf of Growth'],
+    messages: [
+      'Sukoon’s first bamboo leaf has opened. Small beginnings still count as growth.',
+      'A second leaf has grown in Sukoon’s grove. Patience and repetition are working.',
+      'Sukoon’s bamboo is standing taller because you continued to show up.',
+      'Sukoon’s grove is full and peaceful. You created this growth one week at a time.'
+    ]
+  },
+  bunny: {
+    label: 'Tez’s meadow',
+    leafNames: ['Meadow Leaf of Courage', 'Meadow Leaf of Momentum', 'Meadow Leaf of Resilience', 'Meadow Leaf of Growth'],
+    messages: [
+      'Tez found the first green leaf in the meadow. Starting gave the whole field a chance to grow.',
+      'The meadow is getting brighter. Your steady effort created real momentum.',
+      'Tez’s meadow kept growing through every difficult day you moved through.',
+      'Tez’s meadow is flourishing. Your consistency turned a small beginning into a living world.'
+    ]
+  },
+  swan: {
+    label: 'Nooran’s lakeside garden',
+    leafNames: ['Willow Leaf of Beginning', 'Willow Leaf of Grace', 'Willow Leaf of Steadiness', 'Willow Leaf of Growth'],
+    messages: [
+      'The first willow leaf has appeared beside Nooran’s lake.',
+      'A second leaf now reflects over the water. Quiet effort still creates change.',
+      'Nooran’s lakeside garden is becoming fuller because you stayed steady.',
+      'The garden beside Nooran’s lake is complete. Grace and effort grew side by side.'
+    ]
+  },
+  lion: {
+    label: 'Sherdil’s savanna',
+    leafNames: ['Acacia Leaf of Courage', 'Acacia Leaf of Strength', 'Acacia Leaf of Resilience', 'Acacia Leaf of Growth'],
+    messages: [
+      'The first acacia leaf has opened in Sherdil’s savanna. Beginning required courage.',
+      'A second leaf has grown. Sherdil sees the strength you are building.',
+      'The acacia kept growing through challenge, just as you did.',
+      'Sherdil’s savanna is flourishing. Courage became consistency, and consistency became growth.'
+    ]
+  },
+  otter: {
+    label: 'Mehnati’s riverbank',
+    leafNames: ['River Leaf of Beginning', 'River Leaf of Resourcefulness', 'River Leaf of Persistence', 'River Leaf of Growth'],
+    messages: [
+      'The first leaf has appeared beside Mehnati’s river.',
+      'Another leaf has grown along the riverbank. You kept finding a way forward.',
+      'Mehnati’s riverbank is stronger because you persisted through the week.',
+      'The riverbank is flourishing. Your effort shaped this world one reflection at a time.'
+    ]
+  }
+};
+
+function getLeafRewards(){
+  try{
+    return JSON.parse(localStorage.getItem(LEAF_REWARD_KEY) || '{}');
+  }catch(e){
+    return {};
+  }
+}
+
+function saveLeafRewards(rewards){
+  try{
+    localStorage.setItem(LEAF_REWARD_KEY, JSON.stringify(rewards));
+  }catch(e){
+    console.error('Leaf reward save failed', e);
+  }
+}
+
+function earnedLeafCount(){
+  const rewards = getLeafRewards();
+  return [1,2,3,4].filter(week => rewards[week]).length;
+}
+
+function awardLeafForWeek(weekNum){
+  if(!companion) return false;
+
+  const rewards = getLeafRewards();
+  if(rewards[weekNum]) return false;
+
+  rewards[weekNum] = {
+    earned: true,
+    animal: companion.key,
+    earnedAt: new Date().toISOString()
+  };
+  saveLeafRewards(rewards);
+  renderGrowthWorld();
+  showLeafReward(weekNum);
+  return true;
+}
+
+function showLeafReward(weekNum){
+  if(!companion) return;
+  const world = COMPANION_WORLDS[companion.key];
+  const leafName = world.leafNames[weekNum - 1];
+
+  document.getElementById('leafRewardTitle').textContent = `You earned the ${leafName}.`;
+  document.getElementById('leafRewardText').textContent = world.messages[weekNum - 1];
+  document.getElementById('leafRewardOverlay').classList.add('show');
+}
+
+function closeLeafReward(){
+  document.getElementById('leafRewardOverlay').classList.remove('show');
+}
+
+function renderGrowthWorld(){
+  const card = document.getElementById('growthCard');
+  if(!card || !companion){
+    if(card) card.style.display = 'none';
+    return;
+  }
+
+  const world = COMPANION_WORLDS[companion.key];
+  const rewards = getLeafRewards();
+  const count = earnedLeafCount();
+  const scene = document.getElementById('growthScene');
+
+  card.style.display = 'block';
+  scene.className = `growth-scene world-${companion.key}`;
+  document.getElementById('growthAvatar').innerHTML =
+    animalSVG(companion.key, companion.fur, companion.patch);
+  document.getElementById('growthWorldLabel').textContent = world.label;
+  document.getElementById('growthHeading').textContent =
+    count === 4 ? `${companion.name.split(' ')[0]}'s world is flourishing` : `Grow with ${companion.name.split(' ')[0]}`;
+  document.getElementById('growthSub').textContent =
+    count === 4
+      ? 'You completed every reflection and grew this world together.'
+      : 'Each saved weekly reflection earns one new leaf.';
+  document.getElementById('growthCount').textContent = `${count} / 4 leaves`;
+
+  document.querySelectorAll('.growth-leaf').forEach(leaf => {
+    const weekNum = Number(leaf.dataset.leaf);
+    leaf.classList.toggle('earned', !!rewards[weekNum]);
+  });
+}
+
+document.getElementById('leafRewardCloseBtn').addEventListener('click', closeLeafReward);
+document.getElementById('leafRewardOverlay').addEventListener('click', event => {
+  if(event.target.id === 'leafRewardOverlay') closeLeafReward();
+});
+
+
+/* ---------- Weekly journal ---------- */
+const JOURNAL_STORAGE_KEY = 'discipline-weekly-journals-v1';
+const JOURNAL_PROMPTED_KEY = 'discipline-weekly-journal-prompts-v1';
+
+const JOURNAL_PROMPTS = {
+  1: [
+    "What helped you get started this week?",
+    "Which habit felt easiest to complete, and which felt hardest?",
+    "What did you learn about your current routine?"
+  ],
+  2: [
+    "Where did you notice yourself becoming stronger or more focused?",
+    "What challenged your discipline this week?",
+    "What helped you keep going when motivation was low?"
+  ],
+  3: [
+    "Which pattern are you most proud of maintaining?",
+    "What distractions or obstacles came up?",
+    "What adjustment would help you stay consistent next week?"
+  ],
+  4: [
+    "What changed in you over these 30 days?",
+    "Which habits do you want to continue?",
+    "What are you most proud of?",
+    "What promise do you want to make to yourself moving forward?"
+  ]
+};
+
+let activeJournalWeek = null;
+
+function getJournalEntries(){
+  try{
+    return JSON.parse(localStorage.getItem(JOURNAL_STORAGE_KEY) || '{}');
+  }catch(e){
+    return {};
+  }
+}
+
+function saveJournalEntries(entries){
+  try{
+    localStorage.setItem(JOURNAL_STORAGE_KEY, JSON.stringify(entries));
+  }catch(e){
+    console.error('Journal save failed', e);
+  }
+}
+
+function getPromptedWeeks(){
+  try{
+    return JSON.parse(localStorage.getItem(JOURNAL_PROMPTED_KEY) || '{}');
+  }catch(e){
+    return {};
+  }
+}
+
+function markWeekPrompted(weekNum){
+  const prompted = getPromptedWeeks();
+  prompted[weekNum] = true;
+  try{
+    localStorage.setItem(JOURNAL_PROMPTED_KEY, JSON.stringify(prompted));
+  }catch(e){}
+}
+
+function weekIsComplete(weekNum){
+  const week = WEEKS.find(w => w.num === weekNum);
+  if(!week) return false;
+  for(let day = week.start; day <= week.end; day++){
+    if(!dayComplete(day)) return false;
+  }
+  return true;
+}
+
+function getWeekForDay(day){
+  return WEEKS.find(w => day >= w.start && day <= w.end);
+}
+
+function checkForWeeklyJournal(day){
+  const week = getWeekForDay(day);
+  if(!week || !weekIsComplete(week.num)) return;
+
+  const prompted = getPromptedWeeks();
+  if(prompted[week.num]) return;
+
+  markWeekPrompted(week.num);
+  setTimeout(() => openJournal(week.num, true), 650);
+}
+
+function openJournal(weekNum, automatic){
+  const week = WEEKS.find(w => w.num === weekNum);
+  if(!week) return;
+
+  activeJournalWeek = weekNum;
+  const entries = getJournalEntries();
+
+  document.getElementById('journalKicker').textContent = `Week ${week.num} complete`;
+  document.getElementById('journalTitle').textContent =
+    week.num === 4 ? 'You made it. What changed?' : 'Pause and reflect.';
+  document.getElementById('journalPrompt').innerHTML =
+    '<ol style="margin:0; padding-left:20px;">' +
+    JOURNAL_PROMPTS[weekNum].map(question => `<li style="margin-bottom:7px;">${question}</li>`).join('') +
+    '</ol>';
+  document.getElementById('journalTextarea').value = entries[weekNum] || '';
+  document.getElementById('journalStatus').textContent =
+    automatic ? 'Your entry saves to this device.' : '';
+  document.getElementById('journalOverlay').classList.add('show');
+
+  setTimeout(() => document.getElementById('journalTextarea').focus(), 100);
+}
+
+function closeJournal(){
+  document.getElementById('journalOverlay').classList.remove('show');
+  document.getElementById('journalStatus').textContent = '';
+  activeJournalWeek = null;
+}
+
+function refreshJournalButtons(){
+  if(!document.getElementById('weeksContainer').children.length) return;
+  const entries = getJournalEntries();
+
+  WEEKS.forEach(week => {
+    const btn = document.querySelector(`[data-week-journal="${week.num}"]`);
+    if(!btn) return;
+
+    const shouldShow = weekIsComplete(week.num) || !!entries[week.num];
+    btn.classList.toggle('show', shouldShow);
+    btn.textContent = entries[week.num]
+      ? `View / edit Week ${week.num} journal`
+      : `Write Week ${week.num} journal`;
+  });
+}
+
+document.getElementById('journalSaveBtn').addEventListener('click', () => {
+  if(!activeJournalWeek) return;
+
+  const entries = getJournalEntries();
+  entries[activeJournalWeek] = document.getElementById('journalTextarea').value.trim();
+  saveJournalEntries(entries);
+  markWeekPrompted(activeJournalWeek);
+
+  const savedWeek = activeJournalWeek;
+  const hasEntry = !!entries[savedWeek];
+  document.getElementById('journalStatus').textContent = 'Saved ✓';
+  refreshJournalButtons();
+
+  setTimeout(() => {
+    closeJournal();
+    if(hasEntry) awardLeafForWeek(savedWeek);
+  }, 700);
+});
+
+document.getElementById('journalLaterBtn').addEventListener('click', closeJournal);
+
+document.getElementById('journalOverlay').addEventListener('click', event => {
+  if(event.target.id === 'journalOverlay') closeJournal();
+});
+
+document.addEventListener('keydown', event => {
+  if(event.key === 'Escape' && document.getElementById('journalOverlay').classList.contains('show')){
+    closeJournal();
+  }
+});
+
+
+
+/* ---------- Final 30-day report ---------- */
+function getProgressStats(){
+  let totalChecked = 0;
+  let fullDays = 0;
+  let startedDays = 0;
+
+  for(let day = 1; day <= 30; day++){
+    const d = state[day] || emptyDay();
+    const completed = CATEGORIES.filter(c => d[c.key]).length;
+    totalChecked += completed;
+    if(completed === CATEGORIES.length) fullDays++;
+    if(completed > 0) startedDays++;
+  }
+
+  return { totalChecked, fullDays, startedDays, totalPossible: 150 };
+}
+
+function buildFinalReport(){
+  const stats = getProgressStats();
+  const entries = getJournalEntries();
+  const companionName = companion ? companion.name : 'Your companion';
+  const completedDate = new Date().toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  const lines = [
+    'THE 30-DAY DISCIPLINE CHALLENGE',
+    'Final Reflection Report',
+    '',
+    `Completed: ${completedDate}`,
+    `Companion: ${companionName}`,
+    '',
+    'PROGRESS SUMMARY',
+    `Total check-ins: ${stats.totalChecked}/${stats.totalPossible}`,
+    `Fully completed days: ${stats.fullDays}/30`,
+    `Days started: ${stats.startedDays}/30`,
+    '',
+    'COMPANION GROWTH',
+    `Leaves earned: ${earnedLeafCount()}/4`,
+    companion && COMPANION_WORLDS[companion.key]
+      ? `World: ${COMPANION_WORLDS[companion.key].label}`
+      : 'World: Not selected',
+    '',
+    'WEEKLY REFLECTIONS'
+  ];
+
+  WEEKS.forEach(week => {
+    lines.push('');
+    lines.push(`Week ${week.num} — ${week.name}`);
+    lines.push(entries[week.num] || 'No journal entry was written for this week.');
+  });
+
+  lines.push('');
+  lines.push('FINAL NOTE');
+  lines.push('You showed up, reflected, and built evidence that you can keep promises to yourself.');
+  lines.push('');
+  lines.push('— feelingkhushitoday');
+
+  return lines.join('\n');
+}
+
+function downloadFinalReport(){
+  const report = buildFinalReport();
+  const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = '30-day-discipline-final-report.txt';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 
 /* ---------- Email My Progress (mailto) ---------- */
 function buildProgressSummary(){
@@ -920,9 +1752,9 @@ document.getElementById('celebrateSendBtn').addEventListener('click', () => {
     document.getElementById('celebrateSendBtn').textContent = 'Sent ✓';
     return;
   }
-  // Fallback: open mail app with pre-filled message
-  const subject = `I completed the 30-Day Discipline Challenge! 🎉`;
-  const body = `I just finished all 30 days of the Discipline Challenge — 150/150 check-ins across movement, hydration, sleep, nourishment, and mind.\n\nShowing up every day for 30 days straight. Proud of this one.\n\n— Tracked at feelingkhushitoday's 30-Day Discipline Challenge`;
+  // Fallback: open mail app with the complete report pre-filled
+  const subject = `My 30-Day Discipline Challenge Final Report`;
+  const body = buildFinalReport();
   const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   window.location.href = mailtoUrl;
 });
@@ -966,6 +1798,8 @@ function showCelebration(){
     }
   }
 }
+
+document.getElementById('downloadReportBtn').addEventListener('click', downloadFinalReport);
 
 document.getElementById('celebrateCloseBtn').addEventListener('click', () => {
   document.getElementById('celebrateOverlay').classList.remove('show');
@@ -1102,8 +1936,19 @@ function sendDailyEmailJS(email, day, animal, fact, motivation){
 
 function sendCompletionEmailJS(email){
   if(!emailjsReady || !EMAILJS_COMPLETION_TEMPLATE_ID) return false;
+  const stats = getProgressStats();
+  const entries = getJournalEntries();
+  const finalReport = buildFinalReport();
+
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_COMPLETION_TEMPLATE_ID, {
-    to_email: email
+    to_email: email,
+    final_report: finalReport,
+    total_checkins: `${stats.totalChecked}/${stats.totalPossible}`,
+    full_days: `${stats.fullDays}/30`,
+    week_1_reflection: entries[1] || 'No entry provided.',
+    week_2_reflection: entries[2] || 'No entry provided.',
+    week_3_reflection: entries[3] || 'No entry provided.',
+    week_4_reflection: entries[4] || 'No entry provided.'
   }).catch(err => console.error('EmailJS completion send failed', err));
   return true;
 }
@@ -1200,11 +2045,14 @@ function renderCompanionBadge(){
   const badge = document.getElementById('companionBadge');
   if(!companion){
     badge.style.display = 'none';
+    const growthCard = document.getElementById('growthCard');
+    if(growthCard) growthCard.style.display = 'none';
     return;
   }
   badge.style.display = 'flex';
   document.getElementById('companionBadgeSvg').innerHTML = animalSVG(companion.key, companion.fur, companion.patch);
   document.getElementById('companionBadgeName').textContent = companion.name;
+  renderGrowthWorld();
 }
 
 function buildAvatarPicker(){
