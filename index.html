@@ -109,17 +109,27 @@
   /* Legend */
   .legend{
     display:flex;
+    align-items:center;
     justify-content: space-between;
-    padding: 0 4px;
+    padding: 0 8px 0 12px;
     margin-bottom: 6px;
   }
-  .legend span{
+  .legend-daynum{
+    width: 22px;
+    flex-shrink: 0;
+  }
+  .legend-checks{
+    display:flex;
+    gap: 6px;
+  }
+  .legend-checks span{
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.5px;
     color: var(--dark-soft);
     width: 34px;
     text-align: center;
+    flex-shrink: 0;
   }
 
   /* Week section */
@@ -535,7 +545,7 @@
 
   @media (max-width: 380px){
     .check{ width: 30px; height: 30px; }
-    .legend span{ width: 30px; }
+    .legend-checks span{ width: 30px; }
   }
 </style>
 </head>
@@ -722,7 +732,7 @@ function buildWeeks(){
 
     const legend = document.createElement('div');
     legend.className = 'legend';
-    legend.innerHTML = `<span></span>` + CATEGORIES.map(c => `<span>${c.label}</span>`).join('');
+    legend.innerHTML = `<span class="legend-daynum"></span><div class="legend-checks">` + CATEGORIES.map(c => `<span>${c.label}</span>`).join('') + `</div>`;
     weekEl.appendChild(legend);
 
     for(let day = week.start; day <= week.end; day++){
