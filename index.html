@@ -465,6 +465,8 @@
     position: relative;
     width: 110px;
     margin: 0 auto 10px;
+    animation: dance 0.6s ease-in-out infinite;
+    transform-origin: bottom center;
   }
   .celebrate-avatar-wrap svg{ width: 110px; height: 110px; }
   .party-hat{
@@ -473,6 +475,22 @@
     left: 50%;
     transform: translateX(-50%) rotate(-8deg);
     width: 46px;
+    animation: hat-bob 0.6s ease-in-out infinite;
+  }
+  @keyframes dance{
+    0%, 100%{ transform: rotate(-8deg) translateY(0); }
+    25%{ transform: rotate(6deg) translateY(-4px); }
+    50%{ transform: rotate(-4deg) translateY(0); }
+    75%{ transform: rotate(8deg) translateY(-6px); }
+  }
+  @keyframes hat-bob{
+    0%, 100%{ transform: translateX(-50%) rotate(-8deg) translateY(0); }
+    25%{ transform: translateX(-50%) rotate(4deg) translateY(-3px); }
+    50%{ transform: translateX(-50%) rotate(-10deg) translateY(0); }
+    75%{ transform: translateX(-50%) rotate(6deg) translateY(-4px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .celebrate-avatar-wrap, .party-hat{ animation: none; }
   }
 
   /* Day-complete toast */
@@ -866,6 +884,12 @@ document.getElementById('celebrateSendBtn').addEventListener('click', () => {
     alert('Enter a valid email first.');
     return;
   }
+  const sentViaEmailJS = sendCompletionEmailJS(email);
+  if(sentViaEmailJS){
+    document.getElementById('celebrateSendBtn').textContent = 'Sent ✓';
+    return;
+  }
+  // Fallback: open mail app with pre-filled message
   const subject = `I completed the 30-Day Discipline Challenge! 🎉`;
   const body = `I just finished all 30 days of the Discipline Challenge — 150/150 check-ins across movement, hydration, sleep, nourishment, and mind.\n\nShowing up every day for 30 days straight. Proud of this one.\n\n— Tracked at feelingkhushitoday's 30-Day Discipline Challenge`;
   const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -896,6 +920,15 @@ function showCelebration(){
   }
   document.getElementById('celebrateOverlay').classList.add('show');
   launchConfetti();
+
+  const savedEmail = getNotifyEmail();
+  if(savedEmail){
+    document.getElementById('celebrateEmailInput').value = savedEmail;
+    const sent = sendCompletionEmailJS(savedEmail);
+    if(sent){
+      document.getElementById('celebrateSendBtn').textContent = 'Sent ✓';
+    }
+  }
 }
 
 document.getElementById('celebrateCloseBtn').addEventListener('click', () => {
@@ -998,14 +1031,16 @@ function showDayToast(day, animal, fact, motivation){
 }
 
 // EmailJS config — fill these in from your EmailJS dashboard to enable real automatic emails.
-// If left as-is, the app will just show the in-app toast above instead.
-const EMAILJS_PUBLIC_KEY = '';
-const EMAILJS_SERVICE_ID = '';
-const EMAILJS_TEMPLATE_ID = '';
+// If left blank, the app will just show the in-app toast / mailto fallback instead.
+const EMAILJS_PUBLIC_KEY = 'Ta-uWl2iXY3h5NnYm';
+const EMAILJS_SERVICE_ID = 'service_aex127k';
+const EMAILJS_TEMPLATE_ID = 'template_w70skit'; // daily "day complete" template
+const EMAILJS_COMPLETION_TEMPLATE_ID = 'template_pfydcp9'; // 30-day finished template
 let emailjsReady = false;
 
 (function initEmailJS(){
-  if(!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) return;
+  const hasAnyTemplate = EMAILJS_TEMPLATE_ID || EMAILJS_COMPLETION_TEMPLATE_ID;
+  if(!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !hasAnyTemplate) return;
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
   script.onload = () => {
@@ -1018,7 +1053,7 @@ let emailjsReady = false;
 })();
 
 function sendDailyEmailJS(email, day, animal, fact, motivation){
-  if(!emailjsReady) return;
+  if(!emailjsReady || !EMAILJS_TEMPLATE_ID) return;
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
     to_email: email,
     day: day,
@@ -1026,6 +1061,14 @@ function sendDailyEmailJS(email, day, animal, fact, motivation){
     motivation: motivation,
     fact: fact
   }).catch(err => console.error('EmailJS send failed', err));
+}
+
+function sendCompletionEmailJS(email){
+  if(!emailjsReady || !EMAILJS_COMPLETION_TEMPLATE_ID) return false;
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_COMPLETION_TEMPLATE_ID, {
+    to_email: email
+  }).catch(err => console.error('EmailJS completion send failed', err));
+  return true;
 }
 
 function handleDayCompleted(day){
