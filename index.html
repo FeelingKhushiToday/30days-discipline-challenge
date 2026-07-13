@@ -1,38 +1,29 @@
 from pathlib import Path
 
-src = Path('/mnt/data/index_updated_smile.html')
-text = src.read_text(encoding='utf-8')
+src = Path("/mnt/data/index (5).html")
+html = src.read_text(encoding="utf-8")
 
-# Replace smile CSS with animated congratulations text CSS
-old_css = """
-  .avatar-smile{
+# Remove the old party hat and waving-hand CSS.
+start = html.find("  .party-hat{")
+end = html.find("  @keyframes bob{", start)
+if start != -1 and end != -1:
+    html = html[:start] + """  .celebrate-congrats{
     position:absolute;
     left:50%;
-    top:64px;
-    transform:translateX(-50%);
-    width:26px;
-    height:14px;
-    pointer-events:none;
-  }
-"""
-new_css = """
-  .celebrate-congrats{
-    position:absolute;
-    left:50%;
-    top:-42px;
+    top:-46px;
     transform:translateX(-50%);
     width:max-content;
     font-family:'Playfair Display', serif;
     font-style:italic;
     font-weight:700;
     font-size:24px;
-    letter-spacing:0.5px;
+    letter-spacing:0.4px;
     color:#F7F9F4;
     text-shadow:
-      0 0 6px #D8B26E,
-      0 0 14px #C97B4A,
-      0 0 24px rgba(216,178,110,0.85);
-    animation:fireworkText 1.2s ease-in-out infinite alternate;
+      0 0 5px #D8B26E,
+      0 0 12px #C97B4A,
+      0 0 22px rgba(216,178,110,0.95);
+    animation:fireworkText 1.15s ease-in-out infinite alternate;
     pointer-events:none;
   }
   .celebrate-congrats::before,
@@ -44,61 +35,63 @@ new_css = """
     color:#D8B26E;
     font-size:18px;
     text-shadow:0 0 8px #F7F9F4, 0 0 16px #D8B26E;
-    animation:sparkBurst 1s ease-in-out infinite alternate;
+    animation:sparkBurst 0.95s ease-in-out infinite alternate;
   }
   .celebrate-congrats::before{ left:-26px; }
   .celebrate-congrats::after{
     right:-26px;
-    animation-delay:.35s;
+    animation-delay:.3s;
   }
   @keyframes fireworkText{
-    from{
-      transform:translateX(-50%) scale(0.96);
-      opacity:0.86;
-    }
-    to{
-      transform:translateX(-50%) scale(1.06);
-      opacity:1;
-    }
+    from{ transform:translateX(-50%) scale(.96); opacity:.82; }
+    to{ transform:translateX(-50%) scale(1.06); opacity:1; }
   }
   @keyframes sparkBurst{
-    from{
-      transform:translateY(-50%) scale(0.7) rotate(0deg);
-      opacity:0.55;
-    }
-    to{
-      transform:translateY(-50%) scale(1.25) rotate(35deg);
-      opacity:1;
-    }
+    from{ transform:translateY(-50%) scale(.7) rotate(0deg); opacity:.5; }
+    to{ transform:translateY(-50%) scale(1.25) rotate(35deg); opacity:1; }
   }
-"""
-text = text.replace(old_css, new_css)
 
-# Replace smile SVG with Congratulations text
-old_html = """      <span id="celebrateAvatarSvg"></span>
-      <svg class="avatar-smile" viewBox="0 0 26 14" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 4 Q13 12 23 4" fill="none" stroke="#1F2A1C" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>"""
-new_html = """      <div class="celebrate-congrats">Congratulations!</div>
-      <span id="celebrateAvatarSvg"></span>"""
-text = text.replace(old_html, new_html)
+""" + html[end:]
 
-# Ensure reduced-motion also covers new effects
-old_reduce = """
-  @media (prefers-reduced-motion: reduce){
-    .celebrate-avatar-wrap{ animation:none; }
-  }
-"""
-new_reduce = """
-  @media (prefers-reduced-motion: reduce){
+# Remove obsolete wave animation.
+wave_start = html.find("  @keyframes wave{")
+reduce_start = html.find("  @media (prefers-reduced-motion: reduce){", wave_start)
+if wave_start != -1 and reduce_start != -1:
+    html = html[:wave_start] + html[reduce_start:]
+
+# Update reduced motion rule.
+html = html.replace(
+"""  @media (prefers-reduced-motion: reduce){
+    .celebrate-avatar-wrap, .wave-hand{ animation: none; }
+  }""",
+"""  @media (prefers-reduced-motion: reduce){
     .celebrate-avatar-wrap,
     .celebrate-congrats,
     .celebrate-congrats::before,
     .celebrate-congrats::after{ animation:none; }
-  }
-"""
-text = text.replace(old_reduce, new_reduce)
+  }"""
+)
 
-out = Path('/mnt/data/index_congratulations_firework.html')
-out.write_text(text, encoding='utf-8')
-print(out)
+# Replace the hat/avatar/hand block with clean congratulations text + avatar.
+block_start = html.find('    <div class="celebrate-avatar-wrap">')
+block_end = html.find('    </div>\n    <div class="celebrate-title">', block_start)
+if block_start != -1 and block_end != -1:
+    replacement = """    <div class="celebrate-avatar-wrap">
+      <div class="celebrate-congrats">Congratulations!</div>
+      <span id="celebrateAvatarSvg"></span>
+    </div>
+"""
+    html = html[:block_start] + replacement + html[block_end + len("    </div>\n"):]
+
+out = Path("/mnt/data/index.html")
+out.write_text(html, encoding="utf-8")
+
+# Basic validation checks.
+assert html.lstrip().startswith("<!DOCTYPE html>")
+assert "from pathlib import Path" not in html
+assert "avatar-smile" not in html
+assert "party-hat" not in html
+assert "wave-hand" not in html
+assert "Congratulations!" in html
+
+print("Clean HTML created:", out)
